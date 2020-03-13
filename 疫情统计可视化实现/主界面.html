@@ -19,19 +19,19 @@
         </tr>
         <tr>
             <td align="center">
-                <font size="5" color="orange" id="xianyouquezhen">22264</font>
+                <font size="5" color="orange" id="xianyouquezhen"></font>
             </td>
             <td align="center">
-                <font size="5" color="brown">502</font>
+                <font size="5" color="brown" id="xianyouyisi"></font>
             </td>
             <td align="center">
-                <font size="5" color="blue">5489</font>
+                <font size="5" color="blue" id=xianyouzhongzheng></font>
             </td>
         </tr>
         <tr>
-            <td align="center">昨日-1609</td>
-            <td align="center">昨日+99</td>
-            <td align="center">昨日-248</td>
+            <td align="center" id="xianyouquezhen1"></td>
+            <td align="center" id="xianyouyisi1"></td>
+            <td align="center" id="xianyouzhongzheng1"></td>
         </tr>
     </table>
     <table id="table2" align="center" width="400" height="100">
@@ -42,19 +42,19 @@
         </tr>
         <tr>
             <td align="center">
-                <font size="5" color="red">80814</font>
+                <font size="5" color="red" id="leijiquezhen"></font>
             </td>
             <td align="center">
-                <font size="5" color="sky blue">55477</font>
+                <font size="5" color="sky blue" id="leijizhiyu"></font>
             </td>
             <td align="center">
-                <font size="5" color="black">3073</font>
+                <font size="5" color="black" id="leijisiwang"></font>
             </td>
         </tr>
         <tr>
-            <td align="center">昨日+103</td>
-            <td align="center">昨日+1684</td>
-            <td align="center">昨日+28</td>
+            <td align="center" id="leijiquezhen1"></td>
+            <td align="center" id="leijizhiyu1"></td>
+            <td align="center" id="leijisiwang1"></td>
         </tr>
     </table>
     <center>
@@ -146,17 +146,54 @@
 
             var chart = echarts.init(document.getElementById('main'));
             chart.setOption(option);
-            // chart.on('click', function (params) {
-            //     console.log(params);
-            // });
             chart.on('click', function (params) {
                 var url = "test1.html?name=" + params.name;
                 window.location.assign(encodeURI(url));
             });
         }
         mapin(2);
-        console.log(document.getElementById("xianyouquezhen").innerText);
-        document.getElementById("xianyouquezhen").innerText=777777777;
+        var Data1;
+        $.ajax({
+            async: false,
+            type: 'get',
+            url: 'https://lab.isaaclin.cn/nCoV/api/overall',
+            dataType: 'json',
+            data: {
+                latest: 1,
+            },
+            error: function (XmlHttpRequest, textStatus, errorThrown) {
+                alert("操作失败!");
+            },
+            success: function (result) {
+                Data1 = result;
+            }
+        });
+        var data1;
+        data1=Data1.results[0].currentConfirmedCount;
+        //console.log(Data1.results);
+        document.getElementById("xianyouquezhen").innerText=data1;
+        data1=Data1.results[0].suspectedCount;
+        document.getElementById("xianyouyisi").innerText=data1;
+        data1=Data1.results[0].seriousCount;
+        document.getElementById("xianyouzhongzheng").innerText=data1;
+        data1=Data1.results[0].currentConfirmedIncr;
+        document.getElementById("xianyouquezhen1").innerText="较昨日"+data1;
+        data1=Data1.results[0].suspectedIncr;
+        document.getElementById("xianyouyisi1").innerText="较昨日"+data1;
+        data1=Data1.results[0].seriousIncr;
+        document.getElementById("xianyouzhongzheng1").innerText="较昨日"+data1;
+        data1=Data1.results[0].confirmedCount;
+        document.getElementById("leijiquezhen").innerText=data1;
+        data1=Data1.results[0].curedCount;
+        document.getElementById("leijizhiyu").innerText=data1;
+        data1=Data1.results[0].deadCount;
+        document.getElementById("leijisiwang").innerText=data1;
+        data1=Data1.results[0].confirmedIncr;
+        document.getElementById("leijiquezhen1").innerText="较昨日"+data1;
+        data1=Data1.results[0].curedIncr;
+        document.getElementById("leijizhiyu1").innerText="较昨日"+data1;
+        data1=Data1.results[0].deadIncr;
+        document.getElementById("leijisiwang1").innerText="较昨日"+data1;
     </script>
 </body>
 
