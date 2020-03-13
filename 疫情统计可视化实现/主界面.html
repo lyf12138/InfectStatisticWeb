@@ -11,7 +11,59 @@
 </head>
 
 <body>
-    <div id="main" style="width: 600px;height:400px;"></div>
+    <table id="table1" align="center" width="400" height="100">
+        <tr>
+            <td align="center">现有确诊</td>
+            <td align="center">现有疑似</td>
+            <td align="center">现有重症</td>
+        </tr>
+        <tr>
+            <td align="center">
+                <font size="5" color="orange" id="xianyouquezhen">22264</font>
+            </td>
+            <td align="center">
+                <font size="5" color="brown">502</font>
+            </td>
+            <td align="center">
+                <font size="5" color="blue">5489</font>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">昨日-1609</td>
+            <td align="center">昨日+99</td>
+            <td align="center">昨日-248</td>
+        </tr>
+    </table>
+    <table id="table2" align="center" width="400" height="100">
+        <tr>
+            <td align="center">累计确诊</td>
+            <td align="center">累计治愈</td>
+            <td align="center">累计死亡</td>
+        </tr>
+        <tr>
+            <td align="center">
+                <font size="5" color="red">80814</font>
+            </td>
+            <td align="center">
+                <font size="5" color="sky blue">55477</font>
+            </td>
+            <td align="center">
+                <font size="5" color="black">3073</font>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">昨日+103</td>
+            <td align="center">昨日+1684</td>
+            <td align="center">昨日+28</td>
+        </tr>
+    </table>
+    <center>
+        <input type="button" value="现有确诊" style="height:40px;width:200px;" onClick="valuestring(1)" />
+        <input type="button" value="累计确诊" style="height:40px;width:200px;" onClick="valuestring(2)" />
+    </center>
+    <center>
+        <div id="main" style="width: 600px;height:400px;"></div>
+    </center>
     <script>
         var Data;
         $.ajax({
@@ -26,79 +78,85 @@
                 alert("操作失败!");
             },
             success: function (result) {
-                Data=result;
+                Data = result;
             }
         });
-
-        function datein() {
+        var valuename;
+        function valuestring(i) {
+            mapin(i);
+        }
+        function datein(i) {
             var n = 0;
-            // console.log(date);
             var data = new Array();
             Data.results.forEach(element => {
                 if (element.countryName == "中国") {
-                    console.log(element);
-                    data[n] = { name: element.provinceShortName, value: element.confirmedCount }
-                    n++;
+                    if(i==1){
+                        data[n] = { name: element.provinceShortName, value: element.currentConfirmedCount }
+                        n++;
+                    }
+                    else {
+                        data[n] = { name: element.provinceShortName, value: element.confirmedCount }
+                        n++;
+                    }
                 }
             });
             console.log(data);
             return data;
         }
-        var mydata = datein();
-        console.log(mydata);
-        var option = {
-            backgroundColor: '#FFFFFF',
-            title: {
-                text: '全国疫情累计感染人数',
-                subtext: '（2020年1月24日下午4:00）至今',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item'
-            },
-            visualMap: {
-                show: true,
-                x: 'left',
-                y: 'bottom',
-                splitList: [
-                    { start: 20000, end: 999999 }, { start: 10000, end: 20000 },
-                    { start: 1000, end: 9999 }, { start: 100, end: 999 },
-                    { start: 10, end: 99 }, { start: 0, end: 9 },
-                ],
-                color: ['#8B2323', '#8B6914', '#8B8B00', '#FF8C00', '#FFB90F', '#FFDEAD']
-            },
-            series: [{
-                name: '累计确诊人数',
-                type: 'map',
-                mapType: 'china',
-                selectedMode: 'single',
-                roam: true,
-                label: {
-                    normal: {
-                        show: true
-                    },
-                    emphasis: {
-                        show: true
-                    }
-                },
-                data: mydata
-            }]
-        };
-
-        var chart = echarts.init(document.getElementById('main'));
-        chart.setOption(option);
-        // chart.on('click', function (params) {
-        //     console.log(params);
-        // });
-        chart.on('click', function (params) {
-            var url = "test1.html?name=" + params.name;
-            window.location.assign(encodeURI(url));
-        });
-        window.onload = function () {
-            // console.log(date.results);
+        function mapin(i) {
+            var mydata = datein(i);
             console.log(mydata);
+            var option = {
+                backgroundColor: '#FFFFFF',
+                title: {
+                    text: '全国疫情累计感染人数',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                visualMap: {
+                    show: true,
+                    x: 'left',
+                    y: 'bottom',
+                    splitList: [
+                        { start: 20000, end: 999999 }, { start: 10000, end: 20000 },
+                        { start: 1000, end: 9999 }, { start: 100, end: 999 },
+                        { start: 10, end: 99 }, { start: 0, end: 9 },
+                    ],
+                    color: ['#8B2323', '#8B6914', '#8B8B00', '#FF8C00', '#FFB90F', '#FFDEAD']
+                },
+                series: [{
+                    name: '累计确诊人数',
+                    type: 'map',
+                    mapType: 'china',
+                    selectedMode: 'single',
+                    roam: true,
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    data: mydata
+                }]
+            };
 
+            var chart = echarts.init(document.getElementById('main'));
+            chart.setOption(option);
+            // chart.on('click', function (params) {
+            //     console.log(params);
+            // });
+            chart.on('click', function (params) {
+                var url = "test1.html?name=" + params.name;
+                window.location.assign(encodeURI(url));
+            });
         }
+        mapin(2);
+        console.log(document.getElementById("xianyouquezhen").innerText);
+        document.getElementById("xianyouquezhen").innerText=777777777;
     </script>
 </body>
 
