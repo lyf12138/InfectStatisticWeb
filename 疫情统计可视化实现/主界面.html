@@ -11,10 +11,16 @@
 </head>
 
 <body>
-    <table id="table1" align="center" width="400" height="100">
+    <p style="color:gray">数据更新至<span id="time"></span></p>
+	<script>
+		setInterval(function(){
+			document.getElementById("time").innerHTML = new Date().toLocaleString();
+		},1000)
+	</script>
+    <table id="table1" align="center" width="510" height="100">
         <tr>
-            <td align="center">现有确诊</td>
-            <td align="center">现有疑似</td>
+            <td align="center" width="170">现有确诊</td>
+            <td align="center" width="170">现有疑似</td>
             <td align="center">现有重症</td>
         </tr>
         <tr>
@@ -34,10 +40,10 @@
             <td align="center" id="xianyouzhongzheng1"></td>
         </tr>
     </table>
-    <table id="table2" align="center" width="400" height="100">
+    <table id="table2" align="center" width="510" height="100">
         <tr>
-            <td align="center">累计确诊</td>
-            <td align="center">累计治愈</td>
+            <td align="center" width="170">累计确诊</td>
+            <td align="center" width="170">累计治愈</td>
             <td align="center">累计死亡</td>
         </tr>
         <tr>
@@ -58,8 +64,8 @@
         </tr>
     </table>
     <center>
-        <input type="button" value="现有确诊" style="height:40px;width:200px;" onClick="valuestring(1)" />
-        <input type="button" value="累计确诊" style="height:40px;width:200px;" onClick="valuestring(2)" />
+        <input type="button" value="现有确诊" style="height:40px;width:255px;" onClick="valuestring(1)" />
+        <input type="button" value="累计确诊" style="height:40px;width:255px;" onClick="valuestring(2)" />
     </center>
     <center>
         <div id="main" style="width: 600px;height:400px;"></div>
@@ -107,7 +113,7 @@
             var mydata = datein(i);
             console.log(mydata);
             var option = {
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#C0C0C0',
                 title: {
                     text: '全国疫情累计感染人数',
                     x: 'center'
@@ -124,7 +130,7 @@
                         { start: 1000, end: 9999 }, { start: 100, end: 999 },
                         { start: 10, end: 99 }, { start: 0, end: 9 },
                     ],
-                    color: ['#8B2323', '#8B6914', '#8B8B00', '#FF8C00', '#FFB90F', '#FFDEAD']
+                    color: ['#8B2323', '#A52A2A', '#DC143C', '#FF69B4', '#FFB6C1', '#FFFFFF']
                 },
                 series: [{
                     name: '累计确诊人数',
@@ -170,7 +176,6 @@
         });
         var data1;
         data1=Data1.results[0].currentConfirmedCount;
-        //console.log(Data1.results);
         document.getElementById("xianyouquezhen").innerText=data1;
         data1=Data1.results[0].suspectedCount;
         document.getElementById("xianyouyisi").innerText=data1;
@@ -195,6 +200,7 @@
         data1=Data1.results[0].deadIncr;
         document.getElementById("leijisiwang1").innerText="较昨日"+data1;
     </script>
+    <p style="color:gray">趋势图与国家卫健委官网发布一致，每日更新一次</p>
 </body>
 
 </html>
