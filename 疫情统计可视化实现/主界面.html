@@ -153,7 +153,7 @@
             var chart = echarts.init(document.getElementById('main'));
             chart.setOption(option);
             chart.on('click', function (params) {
-                var url = "test1.html?name=" + params.name;
+                var url = "图表界面.html?name=" + params.name;
                 window.location.assign(encodeURI(url));
             });
         }
