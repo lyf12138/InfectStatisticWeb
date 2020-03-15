@@ -16,30 +16,16 @@
         <p id="nowDateTime"></p>
         <table id="tableAllData" align="center" width="510" height="100">
         <tr>
-            <td align="center" width="170">现有确诊</td>
-            <td align="center" width="170">累积确诊</td>
-            <td align="center" width="170">累积治愈</td>
-            <td align="center" width="170">累积死亡</td>
-        </tr>
-        <tr>
-            <td align="center">
-                <font size="5" color="orange" id="nowSure"></font>
-            </td>
-            <td align="center">
-                <font size="5" color="brown" id="allSure"></font>
-            </td>
-            <td align="center">
-                <font size="5" color="blue" id=allCure></font>
-            </td>
-            <td align="center">
-                <font size="5" color="blue" id=allDead></font>
-            </td>
-        </tr>
-        <tr>
             <td align="center" id="nowSure"></td>
             <td align="center" id="allSure"></td>
             <td align="center" id="allCure"></td>
             <td align="center" id="allDead"></td>
+        </tr>
+        <tr>
+            <td align="center" id="nowSureInch"></td>
+            <td align="center" id="allSureInch"></td>
+            <td align="center" id="allCureInch"></td>
+            <td align="center" id="allDeadInch"></td>
         </tr>
         </table>
     </div>
@@ -116,6 +102,42 @@
             // console.log(mydata);
             return { name: data1, value: data };;
         }
+        function CureData() {
+            var n = 0;
+            var data = new Array();
+            var data1 = new Array();
+            date.results.forEach(element => {
+                var d = new Date(element.updateTime);
+                var str = d.getMonth() + 1 + "月" + d.getDate() + "日";
+                if (n == 0 || data1[n/2] != str&&element.curedCount!=null) {
+                    if(n%2==0){
+                         data[n/2] = element.curedCount;
+                        data1[n/2] = str;
+                    }
+                   n++;
+                }
+            });
+            // console.log(mydata);
+            return { name: data1, value: data };;
+        }
+        function DeadData() {
+            var n = 0;
+            var data = new Array();
+            var data1 = new Array();
+            date.results.forEach(element => {
+                var d = new Date(element.updateTime);
+                var str = d.getMonth() + 1 + "月" + d.getDate() + "日";
+                if (n == 0 || data1[n/2] != str&&element.deadCount!=null) {
+                    if(n%2==0){
+                         data[n/2] = element.deadCount;
+                        data1[n/2] = str;
+                    }
+                   n++;
+                }
+            });
+            // console.log(mydata);
+            return { name: data1, value: data };;
+        }
         var mydata = datein();
         for (var first = 0, last = mydata.name.length - 1; first < last; first++ , last--) {
             var temp = mydata.name[first];
@@ -127,26 +149,112 @@
             mydata.value[first] = mydata.value[last];
             mydata.value[last] = temp;
         }
-        console.log(mydata);
-        // var option = {
-        //     xAxis: {
-        //         type: 'category',
-        //         data: mydata.name,
-        //     },
-        //     yAxis: {
-        //         type: 'value'
-        //     },
-        //     series: [{
-        //         data: mydata.value,
-        //         type: 'line',
-        //         smooth: true
-        //     }]
-        // };
+        function AllConfirm() {
+            var n = 0;
+            var data = new Array();
+            var data1 = new Array();
+            date.results.forEach(element => {
+                var d = new Date(element.updateTime);
+                var str = d.getMonth() + 1 + "月" + d.getDate() + "日";
+                if (n == 0 || data1[n/2] != str&&element.confirmedCount!=null) {
+                    if(n%2==0){
+                         data[n/2] = element.confirmedCount;
+                        data1[n/2] = str;
+                    }
+                   n++;
+                }
+            });
+            return { name: data1, value: data };;
+        }
+        var confirmedData = AllConfirm();
+        for (var first = 0, last = confirmedData.name.length - 1; first < last; first++ , last--) {
+            var temp = confirmedData.name[first];
+            confirmedData.name[first] = confirmedData.name[last];
+            confirmedData.name[last] = temp;
+        }
+        for (var first = 0, last = confirmedData.value.length - 1; first < last; first++ , last--) {
+            var temp = confirmedData.value[first];
+            confirmedData.value[first] = confirmedData.value[last];
+            confirmedData.value[last] = temp;
+        }
+        var curedData = CureData();
+        for (var first = 0, last = curedData.name.length - 1; first < last; first++ , last--) {
+            var temp = curedData.name[first];
+            curedData.name[first] = curedData.name[last];
+            curedData.name[last] = temp;
+        }
+        for (var first = 0, last = curedData.value.length - 1; first < last; first++ , last--) {
+            var temp = curedData.value[first];
+            curedData.value[first] = curedData.value[last];
+            curedData.value[last] = temp;
+        }
+        var deadData = DeadData();
+        for (var first = 0, last = deadData.name.length - 1; first < last; first++ , last--) {
+            var temp = deadData.name[first];
+            deadData.name[first] = deadData.name[last];
+            deadData.name[last] = temp;
+        }
+        for (var first = 0, last = deadData.value.length - 1; first < last; first++ , last--) {
+            var temp = deadData.value[first];
+            deadData.value[first] = deadData.value[last];
+            deadData.value[last] = temp;
+        }
 
-
-        var option = {
+        var option2 = {
             title: {
                 text: '累计确诊人数'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: mydata.name
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '累计确诊人数',
+                    type: 'line',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {},
+                    data:confirmedData.value
+                }
+            ]
+        };
+        var option1 = {
+            title: {
+                text: '新增确诊人数'
             },
             tooltip: {
                 trigger: 'axis',
@@ -196,11 +304,134 @@
                 }
             ]
         };
-
+        var option3 = {
+            title: {
+                text: '累计治愈人数'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: mydata.name
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '累计确诊人数',
+                    type: 'line',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {},
+                    data:mydata.value
+                }
+            ]
+        };        
+        var option4 = {
+            title: {
+                text: '累计死亡人数'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: mydata.name
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '累计确诊人数',
+                    type: 'line',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    areaStyle: {},
+                    data:mydata.value
+                }
+            ]
+        };
         var chart = echarts.init(document.getElementById('main'));
-        chart.setOption(option);
-        var table = document.getElementById('nowSure');
+        chart.setOption(option1);
+        var data1;
+        data1=date.results[0].currentConfirmedCount;
+        document.getElementById("nowSure").innerText= "现有确诊\n" +  data1;
+        data1=date.results[0].confirmedCount;
+        document.getElementById("allSure").innerText= "累积确诊\n" + data1;
+        data1=date.results[0].curedCount;
+        document.getElementById("allCure").innerText= "累积治愈\n" + data1;
+        data1=date.results[0].deadCount;
+        document.getElementById("allDead").innerText= "累积死亡\n" + data1;
+        data1=date.results[0].currentConfirmedCount - date.results[1].currentConfirmedCount;
+        document.getElementById("nowSureInch").innerText="较昨日\n"+data1;
+        data1=date.results[0].confirmedCount - date.results[1].confirmedCount;;
+        document.getElementById("allSureInch").innerText="较昨日\n"+data1;
+        data1=date.results[0].curedCount - date.results[1].curedCount;;
+        document.getElementById("allCureInch").innerText="较昨日\n"+data1;
+        data1=date.results[0].deadCount -date.results[1].deadCount;
+        document.getElementById("allDeadInch").innerText="较昨日\n"+data1;
     </script>
+    <button type="submit" onclick= "function a(){chart.setOption(option1);}">新增确诊趋势</button>
+    <button type="submit" onclick= "function b(){chart.setOption(option2);}">累积确诊趋势</button>
+    <button type="submit" onclick= "function c(){chart.setOption(option3);}">累计死亡趋势</button>
+    <button type="submit" onclick= "function d(){chart.setOption(option4);}">累积治愈</button>
 </body>
 
 </html>
