@@ -9,6 +9,9 @@
     <script src="china.js"></script>
     <script src="jquery.min.js"></script>
     <script>
+		setInterval(function(){
+			document.getElementById("time").innerHTML = new Date().toLocaleString();
+		},1000);
         function a()
         {
             chart.setOption(option1);
@@ -29,7 +32,9 @@
 </head>
 
 <body>
-    <div id="top" style="width: 600px;height:400px;">
+    <center>
+    <div id="top">
+        <p style="color:gray">数据更新至<span id="time"></span></p>
         <p id="province"></p>
         <p id="nowDateTime"></p>
         <table id="tableAllData" align="center" width="510" height="100">
@@ -47,6 +52,7 @@
         </tr>
         </table>
     </div>
+    </center>
     <script>
         var url=decodeURI(location.href);
         var string=url.split("=")[1];
@@ -66,7 +72,14 @@
         var provincename = string;
         console.log(provincename);
     </script>
-    <div id="main" style="width: 600px;height:400px;"></div>
+    <center>
+        <div id="main" style="width: 600px;height:400px"></div>
+        <button id="nowSureBtn" onclick= "a()">新增确诊趋势</button>
+        <button id="allSureBtn" onclick= "b()">累积确诊趋势</button>
+        <button id="allCureBtn" onclick= "c()">累计死亡趋势</button>
+        <button id="allDeadBtn" onclick= "d()">累积治愈</button>
+        <p style="color:gray">趋势图与国家卫健委官网发布一致，每日更新一次</p>
+    </center>
     <script>
         var url=decodeURI(location.href);
         var string=url.split("=")[1];
@@ -446,10 +459,6 @@
         data1=date.results[0].deadCount -date.results[1].deadCount;
         document.getElementById("allDeadInch").innerText="较昨日\n"+data1;
     </script>
-    <button id="nowSureBtn" onclick= "a()">新增确诊趋势</button>
-    <button id="allSureBtn" onclick= "b()">累积确诊趋势</button>
-    <button id="allCureBtn" onclick= "c()">累计死亡趋势</button>
-    <button id="allDeadBtn" onclick= "d()">累积治愈</button>
 </body>
 
 </html>
