@@ -8,6 +8,24 @@
     <script src="echarts.min.js"></script>
     <script src="china.js"></script>
     <script src="jquery.min.js"></script>
+    <script>
+        function a()
+        {
+            chart.setOption(option1);
+        }
+        function b()
+        {
+            chart.setOption(option2);
+        }
+        function c()
+        {
+            chart.setOption(option3);
+        }
+        function d()
+        {
+            chart.setOption(option4);
+        }
+    </script>
 </head>
 
 <body>
@@ -228,7 +246,7 @@
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: mydata.name
+                    data: confirmedData.name
                 }
             ],
             yAxis: [
@@ -332,7 +350,7 @@
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: mydata.name
+                    data: curedData.name
                 }
             ],
             yAxis: [
@@ -352,7 +370,7 @@
                         }
                     },
                     areaStyle: {},
-                    data:mydata.value
+                    data:curedData.value
                 }
             ]
         };        
@@ -384,7 +402,7 @@
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: mydata.name
+                    data: deadData.name
                 }
             ],
             yAxis: [
@@ -404,7 +422,7 @@
                         }
                     },
                     areaStyle: {},
-                    data:mydata.value
+                    data:deadData.value
                 }
             ]
         };
@@ -428,10 +446,10 @@
         data1=date.results[0].deadCount -date.results[1].deadCount;
         document.getElementById("allDeadInch").innerText="较昨日\n"+data1;
     </script>
-    <button type="submit" onclick= "function a(){chart.setOption(option1);}">新增确诊趋势</button>
-    <button type="submit" onclick= "function b(){chart.setOption(option2);}">累积确诊趋势</button>
-    <button type="submit" onclick= "function c(){chart.setOption(option3);}">累计死亡趋势</button>
-    <button type="submit" onclick= "function d(){chart.setOption(option4);}">累积治愈</button>
+    <button id="nowSureBtn" onclick= "a()">新增确诊趋势</button>
+    <button id="allSureBtn" onclick= "b()">累积确诊趋势</button>
+    <button id="allCureBtn" onclick= "c()">累计死亡趋势</button>
+    <button id="allDeadBtn" onclick= "d()">累积治愈</button>
 </body>
 
 </html>
