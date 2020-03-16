@@ -8,6 +8,7 @@
     <script src="echarts.min.js"></script>
     <script src="china.js"></script>
     <script src="jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="my.css">
     <script>
 		setInterval(function(){
 			document.getElementById("time").innerHTML = new Date().toLocaleString();
@@ -33,7 +34,7 @@
 
 <body>
     <center>
-    <div id="top" style="border:1px solid rgb(105, 105, 105);width:550px;border-radius:100px;">
+    <div id="top" style="border:1px solid rgb(105, 105, 105);width:550px;border-radius:20px;">
         <p style="color:gray">数据更新至<span id="time"></span></p>
         <p id="province"></p>
         <p id="nowDateTime"></p>
@@ -102,10 +103,12 @@
     </script>
     <center>
         <div id="main" style="width: 600px;height:400px"></div>
-        <button id="nowSureBtn" onclick= "a()">新增确诊趋势</button>
-        <button id="allSureBtn" onclick= "b()">累积确诊趋势</button>
-        <button id="allCureBtn" onclick= "c()">累计死亡趋势</button>
-        <button id="allDeadBtn" onclick= "d()">累积治愈</button>
+        <div id="Buttons" style="width:600px;height:80px;border-radius:20px;">
+            <button id="nowSureBtn" style="border-radius: 8px;font-size: 20px;background-color: rgb(133, 255, 137);" onclick= "a()">新增确诊趋势</button>
+            <button id="allSureBtn" style="border-radius: 8px;font-size: 20px;background-color: rgb(128, 223, 255);" onclick= "b()">累积确诊趋势</button>
+            <button id="allCureBtn" style="border-radius: 8px;font-size: 20px;background-color: #ff857c;" onclick= "c()">累计死亡趋势</button>
+            <button id="allDeadBtn" style="border-radius: 8px;font-size: 20px;background-color: #fdff8a; color: black;" onclick= "d()">累积治愈</button>
+        </div>
         <p style="color:gray">趋势图与国家卫健委官网发布一致，每日更新一次</p>
     </center>
     <script>
