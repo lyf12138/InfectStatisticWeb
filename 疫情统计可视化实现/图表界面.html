@@ -39,16 +39,44 @@
         <p id="nowDateTime"></p>
         <table id="tableAllData" align="center" width="510" height="100">
         <tr>
-            <td align="center" id="nowSure" color="orange"></td>
-            <td align="center" id="allSure" color="red"></td>
-            <td align="center" id="allCure" color="green"></td>
-            <td align="center" id="allDead" color="blue"></td>
+            <td align="center" width="170">现有确诊</td>
+            <td align="center" width="170">累计确诊</td>
+            <td align="center" width="170">累积治愈</td>
+            <td align="center" width="170">累积死亡</td>
         </tr>
         <tr>
-            <td align="center" id="nowSureInch"></td>
-            <td align="center" id="allSureInch"></td>
-            <td align="center" id="allCureInch"></td>
-            <td align="center" id="allDeadInch"></td>
+            <td align="center">
+                <font size="5" color="orange" id="nowSure"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="red" id="allSure"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="green" id="allCure"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="blue" id="allDead"></font>    
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="170">较昨日</td>
+            <td align="center" width="170">较昨日</td>
+            <td align="center" width="170">较昨日</td>
+            <td align="center" width="170">较昨日</td>
+        </tr>
+        <tr>
+            <td align="center">
+                <font size="5" color="blue" id="nowSureInch"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="green" id="allSureInch"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="red" id="allCureInch"></font>    
+            </td>
+            <td align="center">
+                <font size="5" color="blue" id="allDeadInch"></font>    
+            </td>
         </tr>
         </table>
     </div>
@@ -443,21 +471,21 @@
         chart.setOption(option1);
         var data1;
         data1=date.results[0].currentConfirmedCount;
-        document.getElementById("nowSure").innerText= "现有确诊\n" +  data1;
+        document.getElementById("nowSure").innerText= data1;
         data1=date.results[0].confirmedCount;
-        document.getElementById("allSure").innerText= "累积确诊\n" + data1;
+        document.getElementById("allSure").innerText= data1;
         data1=date.results[0].curedCount;
-        document.getElementById("allCure").innerText= "累积治愈\n" + data1;
+        document.getElementById("allCure").innerText= data1;
         data1=date.results[0].deadCount;
-        document.getElementById("allDead").innerText= "累积死亡\n" + data1;
+        document.getElementById("allDead").innerText= data1;
         data1=date.results[0].currentConfirmedCount - date.results[1].currentConfirmedCount;
-        document.getElementById("nowSureInch").innerText="较昨日\n"+data1;
+        document.getElementById("nowSureInch").innerText= data1;
         data1=date.results[0].confirmedCount - date.results[1].confirmedCount;;
-        document.getElementById("allSureInch").innerText="较昨日\n"+data1;
+        document.getElementById("allSureInch").innerText= data1;
         data1=date.results[0].curedCount - date.results[1].curedCount;;
-        document.getElementById("allCureInch").innerText="较昨日\n"+data1;
+        document.getElementById("allCureInch").innerText= data1;
         data1=date.results[0].deadCount -date.results[1].deadCount;
-        document.getElementById("allDeadInch").innerText="较昨日\n"+data1;
+        document.getElementById("allDeadInch").innerText= data1;
     </script>
 </body>
 
